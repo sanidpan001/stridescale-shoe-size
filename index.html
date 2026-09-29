@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StrideScale — International Shoe Size Converter (US, UK, EU, Mondopoint &amp; Kids)</title>
+<meta name="description" content="StrideScale converts shoe sizes both ways between US men's, US women's, US kids, UK, EU, Mondopoint and JP. Includes a foot-measuring wizard, printable ruler, fit notes and full kids charts. Free, unlimited, no signup.">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .font-display { font-family: Georgia, "Times New Roman", serif; }
+  .tab-btn.active { background:#1D4ED8; color:#fff; }
+  .faq-answer { max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .faq-item.open .faq-answer { max-height:500px; }
+  .faq-item.open .faq-chevron { transform:rotate(180deg); }
+  .faq-chevron { transition:transform .3s ease; }
+  #printArea { display:none; }
+  @media print {
+    body.print-ruler > *:not(#printArea) { display:none !important; }
+    body.print-ruler #printArea { display:block !important; }
+  }
+  .ruler { position:relative; border-left:2px solid #111827; border-bottom:2px solid #111827; }
+  .tick { position:absolute; bottom:0; width:1px; background:#111827; }
+  .tick-label { position:absolute; bottom:26px; transform:translateX(-50%); font-size:9px; color:#111827; }
+</style>
+</head>
+<body id="top" class="bg-white text-[#111827] antialiased">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-[#F1E4C8]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#1D4ED8] text-white">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2.5 0 2.5-1.5 5-1.5S9.5 16 12 16s2.5-3 5-3 2.5 1.5 5 1.5"/><path d="M4 16V9.5C4 8 5 7 6.5 7c2 0 2.5 1 4 1s2.5-2 4.5-2c1.5 0 3 1 3.5 2.5L20 13"/></svg>
+      </span>
+      <span class="text-xl font-extrabold tracking-tight">Stride<span class="text-[#1D4ED8]">Scale</span></span>
+    </a>
+    <nav class="flex items-center gap-5 sm:gap-8 text-sm font-semibold">
+      <a href="#top" class="hover:text-[#1D4ED8]">Home</a>
+      <a href="https://fixoraa.tech" class="hover:text-[#1D4ED8]">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="bg-[#FAF3E8]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-14 text-center">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 tracking-wide uppercase">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      Unlimited Free Usage
+    </span>
+    <h1 class="font-display text-3xl sm:text-5xl font-bold mt-5 leading-tight">International Shoe Size Converter</h1>
+    <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">Enter your size in <strong>any</strong> system — US men's, US women's, US kids, UK, EU, Mondopoint or JP — and see the exact equivalents in all the others. Plus a foot-measuring wizard, printable ruler and kids' charts.</p>
+    <div class="mt-6 flex flex-wrap justify-center gap-2 text-xs font-semibold text-slate-500">
+      <span class="rounded-full bg-white border border-[#EADFC6] px-3 py-1.5">Bidirectional conversion</span>
+      <span class="rounded-full bg-white border border-[#EADFC6] px-3 py-1.5">Foot-length wizard</span>
+      <span class="rounded-full bg-white border border-[#EADFC6] px-3 py-1.5">Printable ruler</span>
+      <span class="rounded-full bg-white border border-[#EADFC6] px-3 py-1.5">Kids &amp; baby charts</span>
+      <span class="rounded-full bg-white border border-[#EADFC6] px-3 py-1.5">Fit notes</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOP AD ================= -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TOOL ================= -->
+<section id="converter" class="bg-white">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
+    <div class="rounded-3xl border border-[#F1E4C8] shadow-xl shadow-amber-100/60 overflow-hidden bg-white">
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-2 p-4 sm:p-5 bg-[#FAF3E8] border-b border-[#F1E4C8]" role="tablist" aria-label="Converter modes">
+        <button class="tab-btn active rounded-full px-5 py-2.5 text-sm font-bold border border-[#1D4ED8]" data-tab="tab-convert" role="tab">Convert a size</button>
+        <button class="tab-btn rounded-full px-5 py-2.5 text-sm font-bold border border-[#1D4ED8] text-[#1D4ED8] bg-white" data-tab="tab-measure" role="tab">Measure my foot</button>
+        <button class="tab-btn rounded-full px-5 py-2.5 text-sm font-bold border border-[#1D4ED8] text-[#1D4ED8] bg-white" data-tab="tab-kids" role="tab">Kids sizes</button>
+      </div>
+
+      <!-- TAB 1: CONVERT -->
+      <div id="tab-convert" class="tab-panel p-5 sm:p-8" role="tabpanel">
+        <div class="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+          <div>
+            <label for="srcSystem" class="block text-sm font-bold mb-1.5">Your size is in…</label>
+            <select id="srcSystem" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]">
+              <option value="usMen">US Men's</option>
+              <option value="usWomen">US Women's</option>
+              <option value="usKids">US Kids (e.g. 3C, 1Y)</option>
+              <option value="uk">UK</option>
+              <option value="eu">EU</option>
+              <option value="mondo">Mondopoint / JP (cm or mm)</option>
+            </select>
+          </div>
+          <div>
+            <label for="srcValue" class="block text-sm font-bold mb-1.5">Enter size</label>
+            <input id="srcValue" type="text" inputmode="decimal" placeholder="e.g. 9.5" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]">
+          </div>
+          <button id="convertBtn" class="rounded-xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-bold px-8 py-3 text-base transition">Convert</button>
+        </div>
+        <p id="convertError" class="hidden mt-3 text-sm font-semibold text-red-600"></p>
+
+        <div id="sizeResult" class="hidden mt-7">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <h2 class="text-lg font-extrabold">Your size in every system</h2>
+            <button id="copyBtn" class="rounded-lg border border-[#1D4ED8] text-[#1D4ED8] text-sm font-bold px-4 py-2 hover:bg-blue-50 transition">Copy result</button>
+          </div>
+          <p id="nearestNote" class="hidden mb-4 rounded-xl bg-[#FDF2F8] border border-[#F9A8D4] text-sm px-4 py-3"></p>
+          <div id="sizeCards" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+          <div id="fitNotes" class="mt-6 rounded-2xl bg-[#FAF3E8] border border-[#F1E4C8] p-5">
+            <h3 class="font-extrabold mb-2 flex items-center gap-2">
+              <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#F9A8D4] text-white text-xs font-black">!</span>
+              Fit notes for this size
+            </h3>
+            <ul id="fitNotesList" class="list-disc pl-5 space-y-1.5 text-sm text-slate-700"></ul>
+          </div>
+        </div>
+
+        <div id="recentWrap" class="hidden mt-7">
+          <h3 class="text-sm font-extrabold text-slate-500 uppercase tracking-wider mb-2">Recent conversions</h3>
+          <div id="recentList" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <!-- TAB 2: MEASURE -->
+      <div id="tab-measure" class="tab-panel hidden p-5 sm:p-8" role="tabpanel">
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div>
+            <h2 class="text-lg font-extrabold mb-3">How to measure (2 minutes)</h2>
+            <ol class="space-y-3 text-sm text-slate-700">
+              <li class="flex gap-3"><span class="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1D4ED8] text-white text-xs font-black">1</span><span>Place a blank sheet of paper on a hard floor, touching a wall.</span></li>
+              <li class="flex gap-3"><span class="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1D4ED8] text-white text-xs font-black">2</span><span>Stand on the paper with your heel against the wall. Wear the socks you will wear with the shoes.</span></li>
+              <li class="flex gap-3"><span class="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1D4ED8] text-white text-xs font-black">3</span><span>Mark the tip of your longest toe. Measure heel-to-mark in cm or inches.</span></li>
+              <li class="flex gap-3"><span class="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1D4ED8] text-white text-xs font-black">4</span><span>Repeat for both feet and use the <strong>larger</strong> measurement below.</span></li>
+            </ol>
+            <div class="mt-6 grid grid-cols-[1fr_110px] gap-3 items-end">
+              <div>
+                <label for="footLen" class="block text-sm font-bold mb-1.5">Foot length</label>
+                <input id="footLen" type="text" inputmode="decimal" placeholder="e.g. 27" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]">
+              </div>
+              <div>
+                <label for="footUnit" class="block text-sm font-bold mb-1.5">Unit</label>
+                <select id="footUnit" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]">
+                  <option value="cm">cm</option>
+                  <option value="in">inches</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <button id="measureBtn" class="rounded-xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-bold px-8 py-3 text-base transition">Find my size</button>
+              <button id="printRulerBtn" class="rounded-xl border-2 border-[#1D4ED8] text-[#1D4ED8] font-bold px-6 py-3 text-base hover:bg-blue-50 transition">Print measuring ruler</button>
+            </div>
+            <p id="measureError" class="hidden mt-3 text-sm font-semibold text-red-600"></p>
+          </div>
+          <div>
+            <div id="measureEmpty" class="h-full min-h-[220px] rounded-2xl bg-[#FAF3E8] border border-dashed border-[#E5D3AC] flex items-center justify-center p-6 text-center text-sm text-slate-500">
+              Your recommended sizes in every system will appear here.
+            </div>
+            <div id="measureResult" class="hidden">
+              <h2 class="text-lg font-extrabold mb-1">Recommended sizes</h2>
+              <p id="measureDetail" class="text-sm text-slate-500 mb-4"></p>
+              <div id="measureCards" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+              <div class="mt-5 rounded-2xl bg-[#FAF3E8] border border-[#F1E4C8] p-5">
+                <h3 class="font-extrabold mb-2">Fit notes</h3>
+                <ul id="measureFitNotes" class="list-disc pl-5 space-y-1.5 text-sm text-slate-700"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: KIDS -->
+      <div id="tab-kids" class="tab-panel hidden p-5 sm:p-8" role="tabpanel">
+        <h2 class="text-lg font-extrabold mb-2">Kids' size converter</h2>
+        <p class="text-sm text-slate-600 mb-4">Type a US kids' size with its letter — <strong>C</strong> for child (toddler/little kid) or <strong>Y</strong> for youth (big kid). Example: <strong>3C</strong>, <strong>13C</strong>, <strong>1Y</strong>, <strong>4Y</strong>.</p>
+        <div class="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end max-w-xl">
+          <div>
+            <label for="kidsInput" class="block text-sm font-bold mb-1.5">US kids' size</label>
+            <input id="kidsInput" type="text" placeholder="e.g. 3C" class="w-full rounded-xl border border-slate-300 px-4 py-3 text-base uppercase focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]">
+          </div>
+          <button id="kidsBtn" class="rounded-xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-bold px-8 py-3 text-base transition">Convert</button>
+        </div>
+        <p id="kidsError" class="hidden mt-3 text-sm font-semibold text-red-600"></p>
+        <div id="kidsResult" class="hidden mt-6 max-w-xl">
+          <div id="kidsCards" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+          <div class="mt-5 rounded-2xl bg-[#FDF2F8] border border-[#F9A8D4] p-5 text-sm text-slate-700">
+            <strong>Growing-room rule:</strong> leave 0.4–0.5 in (1–1.2 cm) between the longest toe and the shoe's end. Re-measure kids' feet every 2–3 months — they can jump a full size in one season.
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-slate-500">See the complete baby, toddler and youth charts in the <a href="#ref-tables" class="text-[#1D4ED8] font-bold underline">reference tables</a> below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/*__PURE_START__*/
+// ===== Pure conversion logic (no DOM) — tested by stridescale.test.js =====
+
+// [mondopoint mm, US men, US women, UK, EU] — ISO/TS 19407:2015 Mondopoint mapping
+var ADULT_ROWS = [
+  [215, 3.5, 4.5, 2.5, 34],
+  [220, 4, 5, 3, 35],
+  [225, 4.5, 5.5, 3.5, 35.5],
+  [230, 5, 6, 4, 36.5],
+  [235, 5.5, 6.5, 4.5, 37],
+  [240, 6.5, 7.5, 5.5, 38],
+  [245, 7, 8, 6, 38.5],
+  [250, 7.5, 8.5, 6.5, 39.5],
+  [255, 8, 9, 7, 40],
+  [260, 8.5, 9.5, 7.5, 41],
+  [265, 9.5, 10.5, 8.5, 41.5],
+  [270, 10, 11, 9, 42.5],
+  [275, 10.5, 11.5, 9.5, 43],
+  [280, 11, 12, 10, 44],
+  [285, 11.5, 12.5, 10.5, 44.5],
+  [290, 12, 13, 11, 45.5],
+  [295, 13, 14, 12, 46],
+  [300, 13.5, 14.5, 12.5, 47],
+  [305, 14, 15, 13, 47.5],
+  [310, 14.5, 15.5, 13.5, 48.5],
+  [315, 15, 16, 14, 49],
+  [320, 16, 17, 15, 50]
+];
+
+// [US kids label, UK, EU, foot length cm]
+var KIDS_ROWS = [
+  ['1C', 0.5, 16, 7], ['1.5C', 1, 16.5, 7.5],
+  ['2C', 1.5, 17, 8], ['2.5C', 2, 18, 8.5],
+  ['3C', 2.5, 18.5, 9], ['3.5C', 3, 19, 9.5],
+  ['4C', 3.5, 19.5, 10], ['4.5C', 4, 20, 10.5],
+  ['5C', 4.5, 21, 11], ['5.5C', 5, 21.5, 11.5],
+  ['6C', 5.5, 22, 12], ['6.5C', 6, 22.5, 12.5],
+  ['7C', 6.5, 23.5, 13], ['7.5C', 7, 24, 13.5],
+  ['8C', 7.5, 25, 14], ['8.5C', 8, 25.5, 14.5],
+  ['9C', 8.5, 26, 15], ['9.5C', 9, 26.5, 15.5],
+  ['10C', 9.5, 27, 16], ['10.5C', 10, 27.5, 16.5],
+  ['11C', 10.5, 28, 17], ['11.5C', 11, 28.5, 17.5],
+  ['12C', 11.5, 29.5, 18], ['12.5C', 12, 30, 18.5],
+  ['13C', 12.5, 31, 19], ['13.5C', 13, 31.5, 19.5],
+  ['1Y', 13.5, 32, 20], ['1.5Y', 1, 33, 20.5],
+  ['2Y', 1.5, 33.5, 21], ['2.5Y', 2, 34, 21.5],
+  ['3Y', 2.5, 35, 22], ['3.5Y', 3, 35.5, 22.5],
+  ['4Y', 3.5, 36, 23], ['4.5Y', 4, 36.5, 23.5],
+  ['5Y', 4.5, 37.5, 23.5], ['5.5Y', 5, 38, 24],
+  ['6Y', 5.5, 38.5, 24], ['6.5Y', 6, 39, 24.5],
+  ['7Y', 6, 40, 25]
+];
+
+var SYSTEMS = [
+  { id: 'usMen', label: "US Men's" },
+  { id: 'usWomen', label: "US Women's" },
+  { id: 'usKids', label: 'US Kids' },
+  { id: 'uk', label: 'UK' },
+  { id: 'eu', label: 'EU' },
+  { id: 'mondo', label: 'Mondopoint / JP' }
+];
+
+function adultTable() {
+  return ADULT_ROWS.map(function (r) {
+    return { mondo: r[0], usMen: r[1], usWomen: r[2], uk: r[3], eu: r[4], cm: r[0] / 10 };
+  });
+}
+
+function kidsTable() {
+  return KIDS_ROWS.map(function (r) {
+    return { label: r[0], uk: r[1], eu: r[2], cm: r[3], mondo: Math.round(r[3] * 10) };
+  });
+}
+
+function parseNumber(raw) {
+  if (raw === null || raw === undefined) return NaN;
+  var s = String(raw).trim();
+  if (s === '') return NaN;
+  return Number(s);
+}
+
+// Mondopoint/JP input: "27" (cm) or "270" (mm)
+function parseMondoMm(raw) {
+  var n = parseNumber(raw);
+  if (isNaN(n) || n <= 0) return NaN;
+  return n >= 100 ? n : n * 10;
+}
+
+// US kids label: "3C", "13.5Y" (case-insensitive, optional space)
+function parseKidsLabel(raw) {
+  if (raw === null || raw === undefined) return null;
+  var s = String(raw).trim().toUpperCase().replace(/\s+/g, '');
+  var m = s.match(/^(\d+(?:\.\d+)?)([CY])$/);
+  if (!m) return null;
+  return m[1] + m[2];
+}
+
+function fmtSize(v) {
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  return String(v);
+}
+
+function inchesToCm(inches) { return inches * 2.54; }
+function cmToInches(cm) { return cm / 2.54; }
+function round1(x) { return Math.round(x * 10) / 10; }
+function round2(x) { return Math.round(x * 100) / 100; }
+
+// Find adult row by column value: exact match, else nearest (ties round up).
+function findAdultRow(col, value) {
+  var rows = adultTable();
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i][col] === value) return { row: rows[i], exact: true };
+  }
+  var best = null, bestDiff = Infinity;
+  for (var j = 0; j < rows.length; j++) {
+    var d = Math.abs(rows[j][col] - value);
+    if (d < bestDiff - 1e-9 || (Math.abs(d - bestDiff) < 1e-9 && rows[j][col] > best[col])) {
+      best = rows[j]; bestDiff = d;
+    }
+  }
+  return { row: best, exact: false };
+}
+
+// Convert FROM any system. Returns result object or null on invalid input.
+function convertFrom(system, raw) {
+  if (!system) return null;
+
+  if (system === 'usKids') {
+    var label = parseKidsLabel(raw);
+    if (!label) return null;
+    var krows = kidsTable();
+    var krow = null;
+    for (var i = 0; i < krows.length; i++) {
+      if (krows[i].label === label) { krow = krows[i]; break; }
+    }
+    if (!krow) return null;
+    return { system: system, kind: 'kids', inputLabel: krow.label, exact: true, rounded: false,
+             label: krow.label, uk: krow.uk, eu: krow.eu, cm: krow.cm, mondo: krow.mondo };
+  }
+
+  if (system === 'mondo') {
+    var mm = parseMondoMm(raw);
+    if (isNaN(mm)) return null;
+    var lookup = Math.ceil(mm / 5) * 5;
+    if (lookup < 215 || lookup > 320) return null;
+    var mrows = adultTable();
+    var mrow = null;
+    for (var k = 0; k < mrows.length; k++) {
+      if (mrows[k].mondo === lookup) { mrow = mrows[k]; break; }
+    }
+    if (!mrow) return null;
+    return { system: system, kind: 'adult', inputLabel: String(raw).trim(),
+             exact: mm === lookup, rounded: mm !== lookup,
+             mondo: mrow.mondo, usMen: mrow.usMen, usWomen: mrow.usWomen,
+             uk: mrow.uk, eu: mrow.eu, cm: mrow.cm };
+  }
+
+  var colMap = { usMen: 'usMen', usWomen: 'usWomen', uk: 'uk', eu: 'eu' };
+  var col = colMap[system];
+  if (!col) return null;
+  var n = parseNumber(raw);
+  if (isNaN(n) || n <= 0) return null;
+  var found = findAdultRow(col, n);
+  if (!found || !found.row) return null;
+  var r = found.row;
+  return { system: system, kind: 'adult', inputLabel: String(raw).trim(), exact: found.exact, rounded: false,
+           mondo: r.mondo, usMen: r.usMen, usWomen: r.usWomen, uk: r.uk, eu: r.eu, cm: r.cm };
+}
+
+// Foot length -> recommended sizes. len in cm or inches (unit 'cm'|'in').
+function footLengthToSizes(len, unit) {
+  var n = parseNumber(len);
+  if (isNaN(n) || n <= 0) return null;
+  var cm = unit === 'in' ? inchesToCm(n) : n;
+  if (cm < 5 || cm > 40) return null;
+  var mm = cm * 10;
+  var lookup = Math.ceil(mm / 5) * 5;
+  if (lookup < 215) return { kind: 'kids', tooSmall: true, measuredCm: round1(cm), measuredIn: round2(cmToInches(cm)) };
+  if (lookup > 320) return null;
+  var rows = adultTable();
+  var row = null;
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].mondo === lookup) { row = rows[i]; break; }
+  }
+  if (!row) return null;
+  return { kind: 'adult', exact: mm === lookup, roundedUp: mm !== lookup,
+           measuredCm: round1(cm), measuredIn: round2(cmToInches(cm)),
+           mondo: row.mondo, usMen: row.usMen, usWomen: row.usWomen,
+           uk: row.uk, eu: row.eu, cm: row.cm };
+}
+
+function resultSummary(r) {
+  if (!r) return '';
+  if (r.kind === 'kids') {
+    return 'StrideScale: US Kids ' + r.label + ' = UK ' + fmtSize(r.uk) +
+      ', EU ' + fmtSize(r.eu) + ', ' + fmtSize(r.cm) + ' cm foot';
+  }
+  return 'StrideScale: US Men ' + fmtSize(r.usMen) + ' / US Women ' + fmtSize(r.usWomen) +
+    ' / UK ' + fmtSize(r.uk) + ' / EU ' + fmtSize(r.eu) + ' / Mondopoint ' + r.mondo;
+}
+/*__PURE_END__*/
+</script>
+
+<script>
+// ===== DOM wiring (not part of pure logic) =====
+(function () {
+  'use strict';
+  function $(id) { return document.getElementById(id); }
+
+  // ---------- Tabs ----------
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tabBtns.forEach(function (b) {
+        b.classList.remove('active');
+        b.classList.add('text-[#1D4ED8]', 'bg-white');
+      });
+      btn.classList.add('active');
+      btn.classList.remove('text-[#1D4ED8]', 'bg-white');
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.add('hidden'); });
+      $(btn.getAttribute('data-tab')).classList.remove('hidden');
+    });
+  });
+
+  // ---------- Helpers ----------
+  function card(title, value) {
+    return '<div class="rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] p-4 text-center">' +
+      '<div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">' + title + '</div>' +
+      '<div class="mt-1 text-2xl font-black text-[#1D4ED8]">' + value + '</div></div>';
+  }
+  function adultCards(r) {
+    return card("US Men's", fmtSize(r.usMen)) + card("US Women's", fmtSize(r.usWomen)) +
+      card('UK', fmtSize(r.uk)) + card('EU', fmtSize(r.eu)) +
+      card('Mondopoint', r.mondo) + card('Foot length', r.cm + ' cm');
+  }
+  function showError(el, msg) {
+    if (!msg) { el.classList.add('hidden'); el.textContent = ''; return; }
+    el.textContent = msg; el.classList.remove('hidden');
+  }
+  function fitNotesHtml(items) {
+    return items.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+  }
+  var ADULT_FIT_NOTES = [
+    '<strong>Between sizes?</strong> Size <strong>up</strong> for running and athletic shoes — feet swell during exercise and need toe room.',
+    '<strong>Width matters:</strong> standard medium width is D (men\u2019s) / B (women\u2019s). Wide feet should look for W, 2E or 4E fittings.',
+    '<strong>Measure in the evening</strong>, wearing the socks you will actually use. Feet are up to half a size larger late in the day.',
+    'Always fit the <strong>larger foot</strong> — most people have one foot slightly bigger.',
+    'Leave a <strong>thumb\u2019s width (about 1.2 cm)</strong> between your longest toe and the front of the shoe.'
+  ];
+
+  // ---------- Tab 1: Convert ----------
+  var RECENT_KEY = 'stridescale-recent-v1';
+  function loadRecent() {
+    try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (e) { return []; }
+  }
+  function saveRecent(entry) {
+    try {
+      var list = loadRecent().filter(function (x) { return x.summary !== entry.summary; });
+      list.unshift(entry);
+      localStorage.setItem(RECENT_KEY, JSON.stringify(list.slice(0, 8)));
+    } catch (e) { /* storage unavailable */ }
+  }
+  function renderRecent() {
+    var list = loadRecent();
+    var wrap = $('recentWrap'), box = $('recentList');
+    if (!list.length) { wrap.classList.add('hidden'); return; }
+    wrap.classList.remove('hidden');
+    box.innerHTML = list.map(function (x) {
+      return '<button class="recent-chip rounded-full bg-[#FAF3E8] border border-[#EADFC6] px-3 py-1.5 text-xs font-semibold hover:border-[#1D4ED8]" data-summary="' +
+        x.summary.replace(/"/g, '&quot;') + '">' + x.summary.replace('StrideScale: ', '') + '</button>';
+    }).join('');
+    box.querySelectorAll('.recent-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () { copyText(chip.getAttribute('data-summary')); });
+    });
+  }
+  function copyText(t) {
+    function done() {
+      var b = $('copyBtn');
+      if (b) { var old = b.textContent; b.textContent = 'Copied!'; setTimeout(function () { b.textContent = old; }, 1500); }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, function () { fallbackCopy(t); done(); });
+    } else { fallbackCopy(t); done(); }
+  }
+  function fallbackCopy(t) {
+    var ta = document.createElement('textarea');
+    ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) { /* noop */ }
+    document.body.removeChild(ta);
+  }
+
+  var systemLabels = { usMen: "US Men's", usWomen: "US Women's", usKids: 'US Kids', uk: 'UK', eu: 'EU', mondo: 'Mondopoint / JP' };
+
+  $('convertBtn').addEventListener('click', function () {
+    var system = $('srcSystem').value;
+    var raw = $('srcValue').value;
+    showError($('convertError'), '');
+    $('sizeResult').classList.add('hidden');
+    var r = convertFrom(system, raw);
+    if (!r) {
+      var hint = system === 'usKids'
+        ? 'Please enter a valid US kids\u2019 size like 3C, 13C or 1Y.'
+        : system === 'mondo'
+          ? 'Please enter a valid foot length, e.g. 27 (cm) or 270 (mm).'
+          : 'Please enter a valid size number, e.g. 9.5.';
+      showError($('convertError'), hint);
+      return;
+    }
+    if (r.kind === 'kids') {
+      $('sizeCards').innerHTML = card('US Kids', r.label) + card('UK', fmtSize(r.uk)) +
+        card('EU', fmtSize(r.eu)) + card('Foot length', r.cm + ' cm');
+      $('nearestNote').classList.add('hidden');
+      $('fitNotesList').innerHTML = fitNotesHtml([
+        'Leave <strong>0.4\u20130.5 in (1\u20131.2 cm)</strong> of growing room past the longest toe.',
+        'Re-measure kids\u2019 feet every <strong>2\u20133 months</strong>.',
+        'Remember <strong>13C \u2192 1Y</strong> are consecutive sizes, not a big jump — the numbering simply restarts.'
+      ]);
+    } else {
+      $('sizeCards').innerHTML = adultCards(r);
+      var note = $('nearestNote');
+      if (!r.exact) {
+        note.innerHTML = 'No exact row for <strong>' + systemLabels[system] + ' ' + r.inputLabel +
+          '</strong> — showing the nearest standard size (Mondopoint ' + r.mondo + '). When in doubt, try the size on or size up.';
+        note.classList.remove('hidden');
+      } else { note.classList.add('hidden'); }
+      if (r.rounded) {
+        note.innerHTML = 'Rounded <strong>up</strong> to the nearest 5&nbsp;mm Mondopoint step (' + r.mondo + '), the standard practice.';
+        note.classList.remove('hidden');
+      }
+      $('fitNotesList').innerHTML = fitNotesHtml(ADULT_FIT_NOTES);
+    }
+    $('sizeResult').classList.remove('hidden');
+    saveRecent({ summary: resultSummary(r), when: Date.now() });
+    renderRecent();
+    $('copyBtn').onclick = function () { copyText(resultSummary(r)); };
+  });
+  $('srcValue').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('convertBtn').click(); });
+  $('srcSystem').addEventListener('change', function () {
+    $('srcValue').placeholder = this.value === 'usKids' ? 'e.g. 3C' : this.value === 'mondo' ? 'e.g. 27 or 270' : 'e.g. 9.5';
+  });
+
+  // ---------- Tab 2: Measure ----------
+  $('measureBtn').addEventListener('click', function () {
+    showError($('measureError'), '');
+    $('measureResult').classList.add('hidden');
+    $('measureEmpty').classList.remove('hidden');
+    var r = footLengthToSizes($('footLen').value, $('footUnit').value);
+    if (!r) {
+      showError($('measureError'), 'Please enter a valid foot length (roughly 15\u201335 cm / 6\u201314 in).');
+      return;
+    }
+    if (r.tooSmall) {
+      $('measureDetail').textContent = 'Foot length ' + r.measuredCm + ' cm (' + r.measuredIn + ' in) — that looks like a child\u2019s foot.';
+      $('measureCards').innerHTML = card('Foot length', r.measuredCm + ' cm');
+      $('measureFitNotes').innerHTML = fitNotesHtml([
+        'Head to the <strong>Kids sizes</strong> tab or the kids\u2019 chart below — adult tables start at 21.5 cm.',
+        'Leave <strong>0.4\u20130.5 in</strong> of growing room and re-measure every 2\u20133 months.'
+      ]);
+      $('measureEmpty').classList.add('hidden');
+      $('measureResult').classList.remove('hidden');
+      return;
+    }
+    $('measureDetail').textContent = 'Foot length ' + r.measuredCm + ' cm (' + r.measuredIn + ' in)' +
+      (r.roundedUp ? ' — rounded up to Mondopoint ' + r.mondo + '.' : ' — exact Mondopoint ' + r.mondo + '.');
+    $('measureCards').innerHTML = adultCards(r);
+    var notes = ADULT_FIT_NOTES.slice();
+    if (r.roundedUp) notes.unshift('<strong>Your foot falls between standard steps</strong>, so we rounded up — for running shoes consider going up another half size.');
+    notes.push('Sizes vary by brand and last shape — treat conversions as a strong starting point, then check the brand\u2019s own chart.');
+    $('measureFitNotes').innerHTML = fitNotesHtml(notes);
+    $('measureEmpty').classList.add('hidden');
+    $('measureResult').classList.remove('hidden');
+  });
+  $('footLen').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('measureBtn').click(); });
+
+  // ---------- Tab 3: Kids ----------
+  $('kidsBtn').addEventListener('click', function () {
+    showError($('kidsError'), '');
+    $('kidsResult').classList.add('hidden');
+    var r = convertFrom('usKids', $('kidsInput').value);
+    if (!r) { showError($('kidsError'), 'Please enter a valid US kids\u2019 size like 3C, 13C or 1Y.'); return; }
+    $('kidsCards').innerHTML = card('US Kids', r.label) + card('UK', fmtSize(r.uk)) +
+      card('EU', fmtSize(r.eu)) + card('Foot length', r.cm + ' cm');
+    $('kidsResult').classList.remove('hidden');
+  });
+  $('kidsInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('kidsBtn').click(); });
+
+  // ---------- Reference tables ----------
+  function renderRefTables() {
+    var rows = adultTable();
+    var menHtml = rows.map(function (r) {
+      return '<tr class="border-t border-slate-100 hover:bg-[#FAF3E8]"><td class="px-3 py-2 font-bold text-[#1D4ED8]">' + r.mondo +
+        '</td><td class="px-3 py-2">' + fmtSize(r.usMen) + '</td><td class="px-3 py-2">' + fmtSize(r.uk) +
+        '</td><td class="px-3 py-2">' + fmtSize(r.eu) + '</td><td class="px-3 py-2 text-slate-500">' + r.cm + ' cm</td></tr>';
+    }).join('');
+    $('menTableBody').innerHTML = menHtml;
+    var womenHtml = rows.map(function (r) {
+      return '<tr class="border-t border-slate-100 hover:bg-[#FAF3E8]"><td class="px-3 py-2 font-bold text-[#1D4ED8]">' + r.mondo +
+        '</td><td class="px-3 py-2">' + fmtSize(r.usWomen) + '</td><td class="px-3 py-2">' + fmtSize(r.uk) +
+        '</td><td class="px-3 py-2">' + fmtSize(r.eu) + '</td><td class="px-3 py-2 text-slate-500">' + r.cm + ' cm</td></tr>';
+    }).join('');
+    $('womenTableBody').innerHTML = womenHtml;
+    var kidsHtml = kidsTable().map(function (r) {
+      return '<tr class="border-t border-slate-100 hover:bg-[#FAF3E8]"><td class="px-3 py-2 font-bold text-[#1D4ED8]">' + r.label +
+        '</td><td class="px-3 py-2">' + fmtSize(r.uk) + '</td><td class="px-3 py-2">' + fmtSize(r.eu) +
+        '</td><td class="px-3 py-2 text-slate-500">' + r.cm + ' cm</td></tr>';
+    }).join('');
+    $('kidsTableBody').innerHTML = kidsHtml;
+  }
+
+  // ---------- Printable ruler ----------
+  function buildRulers() {
+    var cm = $('cmRuler');
+    var cmHtml = '';
+    for (var mm = 0; mm <= 200; mm++) {
+      var h = mm % 10 === 0 ? 26 : mm % 5 === 0 ? 18 : 10;
+      cmHtml += '<div class="tick" style="left:' + mm + 'mm;height:' + h + 'px"></div>';
+      if (mm % 10 === 0 && mm > 0) cmHtml += '<div class="tick-label" style="left:' + mm + 'mm">' + (mm / 10) + '</div>';
+    }
+    cm.innerHTML = cmHtml;
+    var inch = $('inRuler');
+    var inHtml = '';
+    for (var s = 0; s <= 96; s++) {
+      var hh = s % 16 === 0 ? 26 : s % 8 === 0 ? 18 : s % 4 === 0 ? 13 : 9;
+      inHtml += '<div class="tick" style="left:' + (s / 16) + 'in;height:' + hh + 'px"></div>';
+      if (s % 16 === 0 && s > 0) inHtml += '<div class="tick-label" style="left:' + (s / 16) + 'in">' + (s / 16) + '</div>';
+    }
+    inch.innerHTML = inHtml;
+  }
+  $('printRulerBtn').addEventListener('click', function () {
+    document.body.classList.add('print-ruler');
+    window.print();
+    setTimeout(function () { document.body.classList.remove('print-ruler'); }, 500);
+  });
+
+  // ---------- FAQ accordion ----------
+  document.querySelectorAll('.faq-item').forEach(function (item) {
+    item.querySelector('.faq-q').addEventListener('click', function () {
+      var open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!open) item.classList.add('open');
+    });
+  });
+
+  // ---------- Init ----------
+  renderRefTables();
+  buildRulers();
+  renderRecent();
+});
+</script>
+
+<!-- ================= REFERENCE TABLES ================= -->
+<section id="ref-tables" class="bg-[#FAF3E8]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-14">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-center">Complete reference charts</h2>
+    <p class="text-center text-slate-600 mt-2 max-w-2xl mx-auto text-sm sm:text-base">Standard conversions used by the tool above. Sizing varies by brand and last shape — always check the brand's own chart before ordering.</p>
+    <div class="mt-8 grid lg:grid-cols-2 gap-6">
+      <div class="rounded-2xl bg-white border border-[#F1E4C8] overflow-hidden">
+        <div class="px-5 py-4 border-b border-[#F1E4C8] bg-white"><h3 class="font-extrabold">Men's chart</h3><p class="text-xs text-slate-500">Mondopoint = foot length in mm</p></div>
+        <div class="overflow-x-auto max-h-[420px] overflow-y-auto">
+          <table class="w-full text-sm">
+            <thead class="sticky top-0 bg-[#1D4ED8] text-white"><tr><th class="px-3 py-2.5 text-left">Mondo</th><th class="px-3 py-2.5 text-left">US Men</th><th class="px-3 py-2.5 text-left">UK</th><th class="px-3 py-2.5 text-left">EU</th><th class="px-3 py-2.5 text-left">Foot</th></tr></thead>
+            <tbody id="menTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-white border border-[#F1E4C8] overflow-hidden">
+        <div class="px-5 py-4 border-b border-[#F1E4C8] bg-white"><h3 class="font-extrabold">Women's chart</h3><p class="text-xs text-slate-500">Mondopoint = foot length in mm</p></div>
+        <div class="overflow-x-auto max-h-[420px] overflow-y-auto">
+          <table class="w-full text-sm">
+            <thead class="sticky top-0 bg-[#1D4ED8] text-white"><tr><th class="px-3 py-2.5 text-left">Mondo</th><th class="px-3 py-2.5 text-left">US Women</th><th class="px-3 py-2.5 text-left">UK</th><th class="px-3 py-2.5 text-left">EU</th><th class="px-3 py-2.5 text-left">Foot</th></tr></thead>
+            <tbody id="womenTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 rounded-2xl bg-white border border-[#F1E4C8] overflow-hidden">
+      <div class="px-5 py-4 border-b border-[#F1E4C8]"><h3 class="font-extrabold">Kids' &amp; baby chart</h3><p class="text-xs text-slate-500">C = child (toddler / little kid) &nbsp;·&nbsp; Y = youth (big kid). 13C and 1Y are consecutive sizes.</p></div>
+      <div class="overflow-x-auto max-h-[420px] overflow-y-auto">
+        <table class="w-full text-sm">
+          <thead class="sticky top-0 bg-[#1D4ED8] text-white"><tr><th class="px-3 py-2.5 text-left">US Kids</th><th class="px-3 py-2.5 text-left">UK</th><th class="px-3 py-2.5 text-left">EU</th><th class="px-3 py-2.5 text-left">Foot</th></tr></thead>
+          <tbody id="kidsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIT GUIDE ================= -->
+<section class="bg-white">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-14">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-center">Fit rules the charts don't tell you</h2>
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="rounded-2xl bg-[#FAF3E8] border border-[#F1E4C8] p-5">
+        <div class="text-2xl mb-2">↕️</div>
+        <h3 class="font-extrabold mb-1.5">Between sizes? Size up for sport</h3>
+        <p class="text-sm text-slate-600">For running and court shoes, take the larger size — feet swell during exercise. For snug dress shoes or heels, the smaller size usually works.</p>
+      </div>
+      <div class="rounded-2xl bg-[#FAF3E8] border border-[#F1E4C8] p-5">
+        <div class="text-2xl mb-2">↔️</div>
+        <h3 class="font-extrabold mb-1.5">Width matters as much as length</h3>
+        <p class="text-sm text-slate-600">Standard medium is D for men's and B for women's. Wide feet should look for W, 2E or 4E fittings — a longer size won't fix a narrow shoe.</p>
+      </div>
+      <div class="rounded-2xl bg-[#FAF3E8] border border-[#F1E4C8] p-5">
+        <div class="text-2xl mb-2">🧦</div>
+        <h3 class="font-extrabold mb-1.5">Measure with your socks on</h3>
+        <p class="text-sm text-slate-600">Thick hiking or sports socks add real volume. Measure in the evening too — feet can be half a size larger than in the morning.</p>
+      </div>
+      <div class="rounded-2xl bg-[#FAF3E8] border border-[#F1E4C8] p-5">
+        <div class="text-2xl mb-2">👣</div>
+        <h3 class="font-extrabold mb-1.5">Fit the bigger foot</h3>
+        <p class="text-sm text-slate-600">Almost everyone has one foot slightly larger. Always size to the larger foot, and leave a thumb's width (about 1.2 cm) at the toe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOTTOM AD ================= -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="464498"></script>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SEO ARTICLE ================= -->
+<section class="bg-[#FAF3E8]">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
+    <article id="seo-article" class="prose-article">
+      <h2 class="font-display text-2xl sm:text-3xl font-bold mb-4">The Complete Guide to International Shoe Sizes: US, UK, EU, Mondopoint, JP and Kids' Sizing</h2>
+
+      <p class="mb-4 text-slate-700 leading-relaxed">Few things are more frustrating than ordering shoes from another country and discovering they don't fit. A US men's 9 is not a UK 9, a European 42 means different things on different lasts, and Japanese sizes look like they belong on a ruler rather than a shoebox. This guide explains every major shoe sizing system in the world, how they relate to each other, and how to measure your feet so you can buy footwear from anywhere with confidence.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">Why shoe sizes are such a mess</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">Shoe sizing grew up locally, long before global e-commerce existed. Cobblers in London, Paris and Boston each invented their own numbering, based on their own units and their own ideas of what a "size step" should be. The American system grew out of the English barleycorn — one third of an inch per full size. The European system grew out of the Paris point, two-thirds of a centimetre per size. The Japanese, arriving later, skipped the historical baggage entirely and simply stamped the foot length in centimetres on the box. The result is a patchwork: the same physical foot can legitimately be labelled US 9, UK 8, EU 42 and JP 27, depending on where the shoe was made. There is no single worldwide standard for fashion footwear, which is exactly why conversion tools like the one above exist.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">US sizing: men's, women's and the 1.5 rule</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">American sizes step by one-third of an inch (about 8.46 mm) per full size, with half sizes splitting the difference. The catch that trips up most shoppers is that men's and women's US sizes are not the same scale. A US women's size is roughly 1.5 sizes larger in number than the equivalent men's size: a US men's 8.5 and a US women's 10 fit essentially the same foot. Unisex sneakers are usually labelled in men's sizes, so women buying unisex shoes should go down 1.5 sizes — a woman who wears US 8 should pick US 6.5 in a men's-labelled shoe. US sizes also run from very small (youth and children's ranges) up past 16 for men, and the scale is continuous: children's size 13C flows directly into youth size 1Y, a detail that confuses many parents but is simply one numbering restarting.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">UK sizing: close to US, but one off</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">The British system shares the barleycorn step with the American system but starts counting from a different zero point. In practice, a UK men's size is about one full size smaller in number than the US men's equivalent: US men's 10 is UK 9, and the same one-size offset holds across most of the adult range. Women's UK sizes follow the same relationship relative to women's US sizes. Children's UK sizes also exist on their own continuous scale, which is why a UK kids' 13.5 sits right next to a UK kids' 1. Because the UK and US scales look so similar on paper, shoppers constantly mix them up — always check which country's scale the label refers to before assuming your usual number.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">EU sizing and the Paris point</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">Continental European sizes are based on the Paris point, equal to two-thirds of a centimetre (6.67 mm). The same scale serves men and women, which is convenient, but the system has a quirk: because 6.67 mm steps don't line up neatly with the 8.46 mm steps of the US and UK systems, brands round to the nearest convenient EU number. That is why you will see the same foot labelled EU 42 by one brand and EU 42.5 by another — neither is wrong, they simply rounded differently from the underlying foot length. EU sizes also tend to run in half steps (39.5, 40.5) in the middle of the range, and some brands skip certain halves entirely. If you are between two EU sizes, the brand's own centimetre chart is more trustworthy than the EU number alone.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">Mondopoint: the honest system</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">Mondopoint is the international standard defined by ISO/TS 19407:2015, and it is refreshingly literal: the size is simply your foot length in millimetres. A 270 mm foot takes Mondopoint 270. No barleycorns, no Paris points, no gender offsets — Mondopoint does not differentiate between men and women at all. It is the standard for ski boots, military footwear and much of Asia. Japan uses the same idea expressed in centimetres, so JP 27 and Mondopoint 270 describe the same foot. When a converter or a brand gives you a Mondopoint number, you are looking at the most objective measurement in the shoe world. If every brand printed Mondopoint on the box, size conversion charts would be unnecessary — which tells you everything about why the legacy systems persist.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">Kids' and baby sizes: C, Y and the great restart</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">Children's sizing is where even experienced shoppers get lost. In the US system, children's sizes carry a letter: C for child (toddlers and little kids, roughly 1C to 13C) and Y for youth (big kids, 1Y to 7Y). The numbering restarts at the handoff — 13C is immediately followed by 1Y, and they are consecutive sizes on one continuous scale, not a dramatic jump. UK kids' sizes have their own version of the same restart (12.5 to 13.5 to 1), and EU kids' sizes simply continue upward without letters, which is arguably the clearest of the three. Baby sizes start around US 1C (about 7 cm of foot) and the letters matter enormously: a toddler's 4C and a youth 4Y are wildly different shoes. Because children's feet grow fast — sometimes a full size in a single season — experts recommend leaving 0.4 to 0.5 inches (1 to 1.2 cm) of growing room and re-measuring every two to three months.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">How to measure your feet at home</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">You don't need any special equipment. Tape a blank sheet of paper to a hard floor against a wall, stand on it with your heel touching the wall, and mark the tip of your longest toe — note that this is not always the big toe. Measure from the wall edge of the paper to the mark in centimetres or millimetres. Do both feet and keep the larger number. Measure in the evening, wearing the socks you intend to use, because feet swell during the day and can measure up to half a size larger than in the morning. Compare your measurement to a Mondopoint column first — it is the most direct translation of what you just measured — and round up to the nearest 5 mm step if you fall between steps. The printable ruler on this page is drawn at true scale for exactly this job; just remember to print it at 100 percent, not "fit to page".</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">Fit rules the charts can't give you</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">A conversion chart gets you the right number, but fit is about more than length. Leave a thumb's width — about 1.2 cm — between your longest toe and the front of the shoe; toes should never touch the end when you stand. If you fall between two sizes, size up for running and athletic shoes, since feet expand with heat and impact, and consider sizing down for snug dress shoes or heels that will stretch slightly. Width is the dimension most shoppers ignore: standard medium width is D in men's and B in women's, and a shoe that is long enough but too narrow will always feel "too small". Look for W, 2E or 4E fittings instead of simply going longer. Finally, remember that different shoe types fit differently by design — a trail runner, a leather oxford and a ski boot in your "same size" will feel like three different sizes, and that is normal.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">Buying shoes internationally online</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">Cross-border shoe shopping is where conversions earn their keep. Japanese marketplaces list JP or centimetre sizes almost exclusively; European boutiques list EU; American retailers list US. Start from your measured foot length in centimetres, find the Mondopoint or JP equivalent, and then read the specific brand's own size chart — reputable brands publish the foot length each size is built for, and that column overrides every conversion. Be honest with yourself about variance: the same nominal size can differ by several millimetres between brands because lasts (the foot-shaped forms shoes are built on) differ. Check return policies before ordering across borders, since return shipping can cost more than the discount you were chasing. And when a product page shows multiple systems on one label — "US 9 / UK 8 / EU 42 / 27 cm" — trust the centimetre figure most.</p>
+
+      <h3 class="text-xl font-extrabold mt-8 mb-3">How to use the StrideScale converter</h3>
+      <p class="mb-4 text-slate-700 leading-relaxed">Pick the system you already know from the dropdown — US men's, US women's, US kids, UK, EU or Mondopoint/JP — type the size, and the tool shows every equivalent instantly, flagging it when your input falls between standard rows so you know it's the nearest match rather than an exact one. If you don't know your size in any system, use the foot-measuring wizard: enter your measured foot length and get recommended sizes everywhere, plus a printable ruler and tailored fit notes. Parents can jump to the kids' tab for C and Y conversions or browse the full baby, toddler and youth charts below. Everything runs in your browser, conversions are unlimited, and nothing is uploaded anywhere.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="bg-white">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-center mb-8">Frequently asked questions</h2>
+    <div class="space-y-3">
+      <div class="faq-item rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] overflow-hidden">
+        <button class="faq-q w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-bold">
+          Is a US men's 9 the same as a UK 9?
+          <svg class="faq-chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer px-5"><p class="pb-5 text-sm text-slate-700 leading-relaxed">No. UK sizes run about one full size smaller in number than US men's sizes. A US men's 9 converts to roughly a UK 8 (Mondopoint 270, EU 42.5). The two scales share the same step length — one barleycorn, a third of an inch — but start counting from different zero points, which creates the constant one-size offset.</p></div>
+      </div>
+      <div class="faq-item rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] overflow-hidden">
+        <button class="faq-q w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-bold">
+          What is Mondopoint sizing?
+          <svg class="faq-chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer px-5"><p class="pb-5 text-sm text-slate-700 leading-relaxed">Mondopoint is the international standard (ISO/TS 19407:2015) in which the shoe size is simply your foot length in millimetres — a 270 mm foot takes Mondopoint 270. It doesn't differentiate between men's and women's sizes. Japan uses the same concept in centimetres (JP 27 = Mondopoint 270), and it's the standard for ski boots and military footwear worldwide.</p></div>
+      </div>
+      <div class="faq-item rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] overflow-hidden">
+        <button class="faq-q w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-bold">
+          What's the difference between men's and women's US sizes?
+          <svg class="faq-chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer px-5"><p class="pb-5 text-sm text-slate-700 leading-relaxed">A US women's size is about 1.5 sizes larger in number than the men's size for the same foot. For example, a US men's 8.5 and a US women's 10 both fit a 26 cm (Mondopoint 260) foot. Unisex shoes are usually labelled in men's sizes, so women should generally go down 1.5 sizes when buying unisex or men's-labelled footwear.</p></div>
+      </div>
+      <div class="faq-item rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] overflow-hidden">
+        <button class="faq-q w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-bold">
+          Why do I wear different EU sizes in different brands?
+          <svg class="faq-chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer px-5"><p class="pb-5 text-sm text-slate-700 leading-relaxed">EU sizes step in Paris points (6.67 mm), which don't align evenly with US/UK steps (8.46 mm), so brands round the same foot to different EU numbers — 42 at one brand, 42.5 at another. Last shapes (the forms shoes are built on) also differ. The most reliable column on any brand's chart is the foot length in centimetres, not the EU number.</p></div>
+      </div>
+      <div class="faq-item rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] overflow-hidden">
+        <button class="faq-q w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-bold">
+          How much space should there be between my toes and the shoe?
+          <svg class="faq-chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer px-5"><p class="pb-5 text-sm text-slate-700 leading-relaxed">Leave about a thumb's width — roughly 1.2 cm (half an inch) — between your longest toe and the front of the shoe while standing. Your toes should never touch the end. For running shoes, err toward more room since feet swell during exercise; for kids, leave 1 to 1.2 cm of growing room.</p></div>
+      </div>
+      <div class="faq-item rounded-2xl border border-[#F1E4C8] bg-[#FAF3E8] overflow-hidden">
+        <button class="faq-q w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-bold">
+          What do C and Y mean in kids' shoe sizes?
+          <svg class="faq-chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer px-5"><p class="pb-5 text-sm text-slate-700 leading-relaxed">C stands for child (toddlers and little kids, about 1C to 13C) and Y stands for youth (big kids, 1Y to 7Y). The numbering restarts at the handoff: 13C is immediately followed by 1Y, and they are consecutive sizes on one continuous scale — not a big jump. UK kids' sizes restart the same way (13.5 to 1).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is a US men's 9 the same as a UK 9?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. UK sizes run about one full size smaller in number than US men's sizes. A US men's 9 converts to roughly a UK 8 (Mondopoint 270, EU 42.5)." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Mondopoint sizing?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Mondopoint is the international standard (ISO/TS 19407:2015) in which the shoe size is simply your foot length in millimetres. Japan uses the same concept in centimetres (JP 27 = Mondopoint 270)." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between men's and women's US sizes?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A US women's size is about 1.5 sizes larger in number than the men's size for the same foot. A US men's 8.5 and a US women's 10 both fit a 26 cm foot." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do I wear different EU sizes in different brands?",
+      "acceptedAnswer": { "@type": "Answer", "text": "EU sizes step in Paris points (6.67 mm), which don't align evenly with US/UK steps, so brands round the same foot to different EU numbers. The foot-length-in-cm column on a brand's chart is the most reliable." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much space should there be between my toes and the shoe?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Leave about a thumb's width, roughly 1.2 cm, between your longest toe and the front of the shoe while standing." }
+    },
+    {
+      "@type": "Question",
+      "name": "What do C and Y mean in kids' shoe sizes?",
+      "acceptedAnswer": { "@type": "Answer", "text": "C stands for child (about 1C to 13C) and Y stands for youth (1Y to 7Y). 13C is immediately followed by 1Y; they are consecutive sizes on one continuous scale." }
+    }
+  ]
+}
+</script>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-[#111827] text-slate-300">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2.5">
+      <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#1D4ED8] text-white">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16c2.5 0 2.5-1.5 5-1.5S9.5 16 12 16s2.5-3 5-3 2.5 1.5 5 1.5"/><path d="M4 16V9.5C4 8 5 7 6.5 7c2 0 2.5 1 4 1s2.5-2 4.5-2c1.5 0 3 1 3.5 2.5L20 13"/></svg>
+      </span>
+      <span class="font-extrabold text-white">StrideScale</span>
+    </div>
+    <p class="text-xs text-slate-400 text-center">Conversions follow standard international charts; sizing varies by brand. Free unlimited use, no signup.</p>
+    <a href="https://fixoraa.tech" class="text-sm font-bold text-white hover:text-[#F9A8D4]">More Tools</a>
+  </div>
+</footer>
+
+<!-- ================= PRINTABLE RULER (print only) ================= -->
+<div id="printArea" aria-hidden="true">
+  <div style="padding:24px;font-family:sans-serif;color:#111827;">
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">StrideScale foot-measuring ruler</h2>
+    <p style="font-size:12px;margin-bottom:16px;">Print at <strong>100% scale</strong> (choose "Actual size", not "Fit to page"). Verify against a known ruler: the 10 cm mark must measure exactly 10 cm.</p>
+    <p style="font-size:12px;font-weight:700;margin-bottom:4px;">Centimetres</p>
+    <div id="cmRuler" class="ruler" style="width:20cm;height:44px;"></div>
+    <p style="font-size:12px;font-weight:700;margin:20px 0 4px;">Inches</p>
+    <div id="inRuler" class="ruler" style="width:6in;height:44px;"></div>
+    <p style="font-size:12px;margin-top:16px;">Place your heel at the 0 line, stand straight, and read your foot length at the longest toe. Use the larger of both feet.</p>
+  </div>
+</div>
+
+</body>
+</html>
